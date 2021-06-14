@@ -1,0 +1,23 @@
+2021-06-14 20:31:24,513 [main] INFO LennoxQA - QA Application is successfully launched
+2021-06-14 20:31:28,902 [main] INFO LennoxQA - Login Info
+2021-06-14 20:31:29,129 [main] INFO LennoxQA - Entered username
+2021-06-14 20:31:29,295 [main] INFO LennoxQA - Entered password
+2021-06-14 20:31:34,936 [main] INFO LennoxQA - Login test passed
+2021-06-14 20:31:45,402 [main] INFO LennoxQA - QA Application is successfully launched
+2021-06-14 20:31:50,452 [main] INFO LennoxQA - Login Info
+2021-06-14 20:31:50,643 [main] INFO LennoxQA - Entered username
+2021-06-14 20:31:50,783 [main] INFO LennoxQA - Entered password
+2021-06-14 20:31:55,048 [main] INFO LennoxQA - Login test passed
+2021-06-14 20:31:58,314 [main] INFO LennoxQA - Main menu selected successfully
+2021-06-14 20:32:03,929 [main] INFO LennoxQA - Sub menu selected successfully
+2021-06-14 20:32:07,489 [main] INFO LennoxQA - Page Navigation done successfully
+2021-06-14 20:32:07,888 [main] INFO LennoxQA - Navigation test passed
+2021-06-14 20:36:07,089 [main] INFO LennoxQA - QA Application is successfully launched
+2021-06-14 20:36:12,359 [main] INFO LennoxQA - Login Info
+2021-06-14 20:36:12,592 [main] INFO LennoxQA - Entered username
+2021-06-14 20:36:12,736 [main] INFO LennoxQA - Entered password
+2021-06-14 20:36:16,765 [main] INFO LennoxQA - Login test passed
+2021-06-14 20:36:19,999 [main] INFO LennoxQA - Main menu selected successfully
+2021-06-14 20:36:27,224 [main] INFO LennoxQA - Sub menu selected successfully
+2021-06-14 20:36:31,533 [main] INFO LennoxQA - Page Navigation done successfully
+2021-06-14 20:36:31,896 [main] INFO LennoxQA - Navigation test passed

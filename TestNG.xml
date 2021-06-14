@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Lennoxcom">
+
+	<listeners>
+		<listener class-name="com.lennox.functionallibrary.Extentreport" />
+	</listeners>
+
+
+	<test name="Lennox Test">
+		<classes>
+			<class name="com.lennox.test.LoginPage_TC" />
+			<class name="com.lennox.test.NavigationMenuSubMenu_TC" />			
+
+		</classes>
+
+	</test>
+
+</suite>
