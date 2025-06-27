@@ -1,0 +1,89 @@
+name: Outcomes Functional Testing QA (Mobile)
+
+on:
+  schedule:
+    - cron: "0 21 * * 6"
+  workflow_dispatch:
+
+jobs:
+  test_galaxy:
+    name: "Outcomes Functional Testing QA (Galaxy)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install
+      - run: npx playwright install-deps
+
+      - name: Manage Secrets
+        env:
+          S3_QA_CREDENTIALS: ${{ secrets.S3_QA_CREDENTIALS }}
+        run: echo "S3_QA_CREDENTIALS=$S3_QA_CREDENTIALS" > .env
+      - name: "Test Execution"
+        run: "npm run ui:outcomes:functional:qa:galaxy"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-galaxy
+          path: |
+            report-dir
+          retention-days: 3
+
+  test_iphone:
+    needs: test_galaxy
+    if: always()
+    name: "Outcomes Functional Testing QA (iPhone XR)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install
+      - run: npx playwright install-deps
+
+      - name: Manage Secrets
+        env:
+          S3_QA_CREDENTIALS: ${{ secrets.S3_QA_CREDENTIALS }}
+        run: echo "S3_QA_CREDENTIALS=$S3_QA_CREDENTIALS" > .env
+      - name: "Test Execution"
+        run: "npm run ui:outcomes:functional:qa:iphone_xr"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-iphone
+          path: |
+            report-dir
+          retention-days: 3
+
+  test_pixel:
+    needs: test_iphone
+    if: always()
+    name: "Outcomes Functional Testing QA (Pixel)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install
+      - run: npx playwright install-deps
+
+      - name: Manage Secrets
+        env:
+          S3_QA_CREDENTIALS: ${{ secrets.S3_QA_CREDENTIALS }}
+        run: echo "S3_QA_CREDENTIALS=$S3_QA_CREDENTIALS" > .env
+      - name: "Test Execution"
+        run: "npm run ui:outcomes:functional:qa:pixel"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-pixel
+          path: |
+            report-dir
+          retention-days: 3

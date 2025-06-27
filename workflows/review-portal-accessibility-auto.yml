@@ -1,0 +1,89 @@
+name: Review Portal Accessibility AUTO
+
+on:
+  schedule:
+    - cron: "20 22 * * *"
+  workflow_dispatch:
+
+jobs:
+  test_web:
+    name: "Review Portal Accessibility AUTO (WEB)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install
+      - run: npx playwright install-deps
+
+      - name: Manage Secrets
+        env:
+          S3_QA_CREDENTIALS: ${{ secrets.S3_QA_CREDENTIALS }}
+        run: echo "S3_QA_CREDENTIALS=$S3_QA_CREDENTIALS" > .env
+      - name: "Test Execution"
+        run: "npm run ui:review-portal:accessibility:auto"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-web
+          path: |
+            report-dir
+          retention-days: 3
+
+  test_iphone:
+    if: always()
+    needs: test_web
+    name: "Review Portal Accessibility AUTO (iPhone 14 Pro Max)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install
+      - run: npx playwright install-deps
+
+      - name: Manage Secrets
+        env:
+          S3_QA_CREDENTIALS: ${{ secrets.S3_QA_CREDENTIALS }}
+        run: echo "S3_QA_CREDENTIALS=$S3_QA_CREDENTIALS" > .env
+      - name: "Test Execution"
+        run: "npm run ui:review-portal:accessibility:auto:iphone"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-iphone
+          path: |
+            report-dir
+          retention-days: 3
+
+  test_ipad:
+    needs: test_iphone
+    if: always()
+    name: "Review Portal Accessibility AUTO (iPad 11 Pro)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install
+      - run: npx playwright install-deps
+
+      - name: Manage Secrets
+        env:
+          S3_QA_CREDENTIALS: ${{ secrets.S3_QA_CREDENTIALS }}
+        run: echo "S3_QA_CREDENTIALS=$S3_QA_CREDENTIALS" > .env
+      - name: "Test Execution"
+        run: "npm run ui:review-portal:accessibility:auto:ipad"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-ipad
+          path: |
+            report-dir
+          retention-days: 3

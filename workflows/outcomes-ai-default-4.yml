@@ -1,0 +1,33 @@
+name: Outcomes Functional Testing AI Suite (default) 4
+
+on:
+  schedule:
+    - cron: "30 21 * * *"
+  workflow_dispatch:
+
+jobs:
+  test_auto:
+    name: "Outcomes Functional Testing AI Suite (Auto) (4 default)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx playwright install
+      - run: npx playwright install-deps
+
+      - name: Manage Secrets
+        env:
+          S3_QA_CREDENTIALS: ${{ secrets.S3_QA_CREDENTIALS }}
+        run: echo "S3_QA_CREDENTIALS=$S3_QA_CREDENTIALS" > .env
+      - name: "Test Execution"
+        run: "npm run ui:outcomes:auto:ai:4"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-auto
+          path: |
+            report-dir
+          retention-days: 3
